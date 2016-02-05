@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Environment Variables
+MYSQLPASS='MYPASSWORD123'
+
 # Install Apache, PHP, MySQL
 echo "Installing LAMP stack..."
 sudo apt-get update > /dev/null 2>&1
@@ -11,8 +14,8 @@ fi
 
 # Configure MySQL Server
 echo "Configuring MySQL Server..."
-sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password MYPASSWORD123' > /dev/null 2>&1
-sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password MYPASSWORD123' > /dev/null 2>&1
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password $MYSQLPASS' > /dev/null 2>&1
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $MYSQLPASS' > /dev/null 2>&1
 sudo apt-get -y install mysql-server > /dev/null 2>&1
 
 # Config and Restart all the installed services to verify that everything is installed properly
@@ -23,8 +26,9 @@ echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf
 service apache2 restart
 service mysql restart
 
+# Print off the result
 if [ $? -ne 0 ]; then
-   echo "Error: Please Check the Installed Services, Installed services failed to run."
+   >&2 echo "Error: Please Check the Installed Services, Installed services failed to run."
 else
    echo "Installed Services ran Sucessfully!"
 fi
