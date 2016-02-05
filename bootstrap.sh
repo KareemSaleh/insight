@@ -13,19 +13,18 @@ fi
 echo "Configuring MySQL Server..."
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password MYPASSWORD123' > /dev/null 2>&1
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password MYPASSWORD123' > /dev/null 2>&1
-
 sudo apt-get -y install mysql-server > /dev/null 2>&1
 
-
-#Restart all the installed services to verify that everything is installed properly
+# Config and Restart all the installed services to verify that everything is installed properly
 echo -e "Verifying and Starting services..."
-
+sudo cp /vagrant/files/envvars /etc/apache2/envvars
+rm -rf /var/lock/apache2 
 echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf
-service apache2 restart > /dev/null 2>&1
-service mysql restart > /dev/null 2>&1
+service apache2 restart
+service mysql restart
 
 if [ $? -ne 0 ]; then
-   echo "Error: Please Check the Installed Services, Installed services failed to run.\n"
+   echo "Error: Please Check the Installed Services, Installed services failed to run."
 else
-   echo "Installed Services ran Sucessfully!\n"
+   echo "Installed Services ran Sucessfully!"
 fi

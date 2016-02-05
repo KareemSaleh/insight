@@ -9,11 +9,11 @@ Vagrant.configure(2) do |config|
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
-
-  config.vm.box = "hashicorp/precise64"
-  config.vm.provision :shell, path: "bootstrap.sh"
-  config.vm.network :forwarded_port, guest: 80, host: 8888
-  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-  config.vm.post_up_message = "Welcome to Project Insight 2016. Visit 'http://127.0.0.1:8888' in your browser to begin."
-
+  config.vm.define "insight" do |insight|
+    config.vm.box = "hashicorp/precise64"
+    config.vm.provision :shell, name: "setup", path: "bootstrap.sh"
+    config.vm.network :forwarded_port, guest: 80, host: 8888
+    config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+    config.vm.post_up_message = "Welcome to Project Insight 2016. Visit 'http://127.0.0.1:8888' in your browser to begin."
+  end
 end
