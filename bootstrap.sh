@@ -21,6 +21,8 @@ sudo apt-get -y install mysql-server > /dev/null 2>&1
 # Config and Restart all the installed services to verify that everything is installed properly
 echo -e "Verifying and Starting services..."
 sudo cp /vagrant/files/envvars /etc/apache2/envvars
+sudo cp /vagrant/files/000-default /etc/apache2/sites-enabled/000-default
+sudo a2enmod rewrite
 rm -rf /var/lock/apache2 
 echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf
 service apache2 restart
