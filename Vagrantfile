@@ -14,6 +14,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, name: "setup", path: "bootstrap.sh"
     config.vm.network :forwarded_port, guest: 80, host: 8888
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-    config.vm.post_up_message = "Welcome to Project Insight 2016. Visit 'http://127.0.0.1:8888' in your browser to begin."
+    config.vm.post_up_message = "Welcome to Project Insight 2016. Visit 'http://127.0.0.1:8888' in your browser to begin.\n" +
+      "To begin the test go to 'http://127.0.0.1:8888/users/add' in your browser."
   end
 end

@@ -19,6 +19,7 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 sudo apt-get -y install mysql-server > /dev/null 2>&1
 # Create DB connection
 mysql -uroot "-p$MYSQLPASS" -e "CREATE DATABASE insight"
+mysql -uroot "-p$MYSQLPASS" -e "CREATE TABLE insight.users (id INT AUTO_INCREMENT PRIMARY KEY, name varchar(20), email varchar(255))"
 sudo cp /vagrant/files/database.php /vagrant/cakephp-2.7.9/app/Config/database.php
 
 # Prep apache for CakePHP by enabling mod_rewrite and setting apache user in configs
