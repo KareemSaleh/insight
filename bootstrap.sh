@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Environment Variables
-MYSQLPASS='MYPASSWORD123'
+MYSQLPASS='DINGDONG'
 
 # Install Apache, PHP, MySQL
 echo "Installing LAMP stack..."
@@ -14,19 +14,21 @@ fi
 
 # Configure MySQL Server
 echo "Configuring MySQL Server..."
-sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password $MYSQLPASS' > /dev/null 2>&1
-sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $MYSQLPASS' > /dev/null 2>&1
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQLPASS" > /dev/null 2>&1
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQLPASS" > /dev/null 2>&1
 sudo apt-get -y install mysql-server > /dev/null 2>&1
 
-# Config and Restart all the installed services to verify that everything is installed properly
-echo -e "Verifying and Starting services..."
+# Prep apache for CakePHP by enabling mod_rewrite and setting apache user in configs
+echo "Preping Apache for CakePHP..."
 sudo cp /vagrant/files/envvars /etc/apache2/envvars
 sudo cp /vagrant/files/000-default /etc/apache2/sites-enabled/000-default
-sudo a2enmod rewrite
 rm -rf /var/lock/apache2 
-echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf
-service apache2 restart
-service mysql restart
+sudo a2enmod rewrite -q > /dev/null 2>&1
+
+# Config and Restart all the installed services to verify that everything is installed properly
+echo "Verifying and Starting services..."
+service apache2 restart > /dev/null 2>&1
+service mysql restart > /dev/null 2>&1
 
 # Print off the result
 if [ $? -ne 0 ]; then
