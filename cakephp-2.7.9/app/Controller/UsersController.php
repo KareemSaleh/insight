@@ -19,12 +19,12 @@ class UsersController extends AppController {
 		}
 
 		/**
-		 * Eg: find('all', array(
-		 *			'conditions' => array('name' => 'Thomas Anderson'),
-		 *			'fields' => array('name', 'email'),
-		 *			'order' => 'field3 DESC',
-		 *			'recursive' => 2,
-		 *			'group' => 'type'));
+		 * Example: find('all', array(
+		 *			     'conditions' => array('name' => 'Thomas Anderson'),
+		 *			     'fields' => array('name', 'email'),
+		 *			     'order' => 'field3 DESC',
+		 *			     'recursive' => 2,
+		 *			     'group' => 'type'));
 		 */
 
 		$users = $this->User->find('all', array());
