@@ -3,7 +3,7 @@ Project Insight 2016.
 
 ## Setup
 1. Download and Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Version 5.0.10 has been verified as of 2016-02-05)
-2. Download and Install [Vagrant](http://www.vagrantup.com/downloads-archive.html) (Version 1.7.4 has been verified as of 2016-02-05)
+2. Download and Install [Vagrant](https://www.vagrantup.com/downloads.html) (Version 1.7.4 has been verified as of 2016-02-05)
 
 ## Usage
 1. After cloning this repository `git clone git@github.com:KareemSaleh/insight.git insight` change into the root directory and run `vagrant up`
