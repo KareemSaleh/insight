@@ -1,0 +1,4 @@
+# Set the default behavior, in case people have core.autocrlf set.
+# Enforce LF even on Windows, CRLF usually breaks BASH scripts
+
+* text=auto eol=lf
