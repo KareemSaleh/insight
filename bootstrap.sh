@@ -19,14 +19,25 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 sudo apt-get -y install mysql-server > /dev/null 2>&1
 # Create DB connection
 mysql -uroot "-p$MYSQLPASS" -e "CREATE DATABASE insight"
+mysql -uroot "-p$MYSQLPASS" -e "CREATE DATABASE test"
 mysql -uroot "-p$MYSQLPASS" -e "CREATE TABLE insight.users (id INT AUTO_INCREMENT PRIMARY KEY, username varchar(50))"
+mysql -uroot "-p$MYSQLPASS" -e "CREATE TABLE test.employees (empid INT PRIMARY KEY, name varchar(50), supervisor INT, location varchar(2), salary INT)"
+mysql -uroot "-p$MYSQLPASS" -e "CREATE TABLE test.bonus (empid INT PRIMARY KEY, nbonus INT)"
+mysql -uroot "-p$MYSQLPASS" -e "CREATE TABLE test.new_supervisor (empid INT PRIMARY KEY, supervisor INT)"
+mysql -uroot "-p$MYSQLPASS" -e "INSERT INTO test.employees VALUES(34, 'Amy', NULL, 'NY', 110000);"
+mysql -uroot "-p$MYSQLPASS" -e "INSERT INTO test.employees VALUES(17, 'Ben', 34, 'TN', 75000);"
+mysql -uroot "-p$MYSQLPASS" -e "INSERT INTO test.employees VALUES(5, 'Chris', 34, 'TN', 80000);"
+mysql -uroot "-p$MYSQLPASS" -e "INSERT INTO test.employees VALUES(10, 'Don', 5, 'HI', 100000);"
+mysql -uroot "-p$MYSQLPASS" -e "INSERT INTO test.bonus VALUES(17, 5000);"
+mysql -uroot "-p$MYSQLPASS" -e "INSERT INTO test.bonus VALUES(10, 2000);"
+mysql -uroot "-p$MYSQLPASS" -e "INSERT INTO test.bonus VALUES(34, 5000);"
 sudo cp /vagrant/files/database.php /vagrant/cakephp-2.7.9/app/Config/database.php
 
 # Prep apache for CakePHP by enabling mod_rewrite and setting apache user in configs
 echo "Preping Apache for CakePHP..."
 sudo cp /vagrant/files/envvars /etc/apache2/envvars
 sudo cp /vagrant/files/000-default /etc/apache2/sites-enabled/000-default
-rm -rf /var/lock/apache2 
+rm -rf /var/lock/apache2
 sudo a2enmod rewrite -q > /dev/null 2>&1
 
 # Config and Restart all the installed services to verify that everything is installed properly
